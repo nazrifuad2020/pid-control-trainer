@@ -1,6 +1,6 @@
 # A Simple PID Trainer App
 
-An interactive app for training PID control based on industrial chemical process
+An interactive app for training PID controller based on industrial chemical process
 
 ## Installation and Launch
 
