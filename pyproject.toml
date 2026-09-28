@@ -1,0 +1,33 @@
+[project]
+name = "pid-control-trainer"
+version = "0.1.0"
+description = "PID Control Trainer (demo version) for a two-phase separator simulation"
+readme = "README.md"
+requires-python = ">=3.8,<3.12"
+license = { text = "Proprietary" }
+authors = [
+    { name = "nazri" },
+]
+dependencies = [
+    "PyQt5>=5.15.9,<5.16",
+    "pyqtgraph>=0.13.3,<0.14",
+    "matplotlib>=3.5",
+    "numpy>=1.21,<2",
+    "scipy>=1.9.0,<1.16",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["pid_control_trainer*"]
+
+[tool.setuptools.package-data]
+pid_tuneopt = [
+    "*.ui",
+    "*.png",
+]
+
+[project.gui-scripts]
+pid-control-trainer = "pid_control_trainer:main"
