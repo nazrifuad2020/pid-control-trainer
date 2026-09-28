@@ -1,10 +1,9 @@
 [project]
 name = "pid-control-trainer"
 version = "0.1.0"
-description = "PID Control Trainer (demo version) for a two-phase separator simulation"
+description = "PID Control Trainer for a two-phase separator simulator"
 readme = "README.md"
 requires-python = ">=3.8,<3.12"
-license = { text = "Proprietary" }
 authors = [
     { name = "nazri" },
 ]
@@ -24,10 +23,10 @@ where = ["src"]
 include = ["pid_control_trainer*"]
 
 [tool.setuptools.package-data]
-pid_tuneopt = [
+pid_control_trainer = [
     "*.ui",
     "*.png",
 ]
 
 [project.gui-scripts]
-pid-control-trainer = "pid_control_trainer:main"
+pid-control-trainer = "main_panel:main"

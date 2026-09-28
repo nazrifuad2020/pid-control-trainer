@@ -1,4 +1,4 @@
-import pid_control_trainer
+from pid_control_trainer import main_panel
 
 if __name__ == "__main__":
-    pid_control_trainer.main()
+    main_panel.main()

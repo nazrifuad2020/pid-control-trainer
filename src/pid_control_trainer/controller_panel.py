@@ -14,10 +14,10 @@ from PyQt5.QtGui import QDoubleValidator
 # from PySide2.QtWidgets import QVBoxLayout, QWidget, QTableWidgetItem, QListWidgetItem, QDialog, QMessageBox
 # from PySide2.QtGui import QDoubleValidator
 
-from . import Level_Widget_Module
+from .level_widget import LevelBarWidget
 
-from .datalogger import Data_Logger
-from .pid_panel import PID_Input_Form
+from .data_logger_panel import DataLogger
+from .pid_panel import PIDInputPanel
 
 import numpy as np
 
@@ -27,12 +27,12 @@ pen_color_list = ['b', 'g', 'y', 'c', 'm']
 
 UI_PATH = Path(__file__).parent / 'controller_panel.ui'
 Ui_Window, QtBaseClass = uic.loadUiType(str(UI_PATH))
-class Controller_Panel(QWidget):
+class ControllerPanel(QWidget):
     def __init__(self, control_str, PV, PVmin, PVmax, unit_str, valve_str, 
                  MV, MVmin=0.0, MVmax=100.0, Ts=1.0, 
                  mode=0, action=-1, Kc=1.0, Ti=0.0, Td=0.0, simtime=4.0,
                  isSlave=False, masterLoopObj=None):
-        super(Controller_Panel, self).__init__()
+        super(ControllerPanel, self).__init__()
         
         self.ui = Ui_Window()
         self.ui.setupUi(self)
@@ -56,7 +56,7 @@ class Controller_Panel(QWidget):
         
         self.OPmin = 0
         self.OPmax = 100
-        self.OP_bar = Level_Widget_Module.LevelBarWidget(Qt.green, minval=self.OPmin, maxval=self.OPmax)
+        self.OP_bar = LevelBarWidget(Qt.green, minval=self.OPmin, maxval=self.OPmax)
         self.ui.verticalLayout_OP.addWidget(self.OP_bar)
         OP = (MV-MVmin)/(MVmax-MVmin)*100    # in percentage
         if OP < self.OPmin:
@@ -94,9 +94,9 @@ class Controller_Panel(QWidget):
         self.PVprev = self.PV
         self.PVmin = PVmin
         self.PVmax = PVmax
-        self.PV_bar = Level_Widget_Module.LevelBarWidget(Qt.blue, minval=self.PVmin, maxval=self.PVmax)
+        self.PV_bar = LevelBarWidget(Qt.blue, minval=self.PVmin, maxval=self.PVmax)
         self.ui.vert_LayoutPV.addWidget(self.PV_bar)
-        self.SP_bar = Level_Widget_Module.LevelBarWidget(Qt.red, minval=self.PVmin, maxval=self.PVmax)
+        self.SP_bar = LevelBarWidget(Qt.red, minval=self.PVmin, maxval=self.PVmax)
         self.ui.vert_LayoutSP.addWidget(self.SP_bar)
         self.ui.label_PVmin.setText(str(round(self.PVmin, 2)))
         self.ui.label_PVmax.setText(str(round(self.PVmax, 2)))
@@ -139,7 +139,7 @@ class Controller_Panel(QWidget):
         
         nsize = int(simtime*3600/self.Ts)
         
-        self.data_logger = Data_Logger(self.desc, self.PVmin, self.PVmax, self.unit_str, nsize)
+        self.data_logger = DataLogger(self.desc, self.PVmin, self.PVmax, self.unit_str, nsize)
         self.ui.pushButton_Datalogger.clicked.connect(self.data_logger.show_window)
         
         self.ui.pushButton_changePID.clicked.connect(self.open_pid_input_form)
@@ -163,7 +163,7 @@ class Controller_Panel(QWidget):
             self.ui.lineEdit_SP.setEnabled(False)
         
     def open_pid_input_form(self):
-        pid_input_dlg = PID_Input_Form(self.desc, self.Kc, self.Ti, self.Td, action=self.action, form=self.pidform)
+        pid_input_dlg = PIDInputPanel(self.desc, self.Kc, self.Ti, self.Td, action=self.action, form=self.pidform)
         if pid_input_dlg.exec_():
             self.Kc = float(pid_input_dlg.ui.lineEdit_Kc_new.text())
             self.Ti = float(pid_input_dlg.ui.lineEdit_Ti_new.text())
