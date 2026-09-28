@@ -1,11 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QDialog
 
-# from PySide2.QtUiTools import QUiLoader
-# from PySide2.QtCore import Qt
-# from PySide2.QtWidgets import QVBoxLayout, QWidget, QTableWidgetItem, QListWidgetItem, QDialog, QMessageBox
-# from PySide2.QtGui import QDoubleValidator
-
 from pathlib import Path
 
 pen_color_list = ['b', 'g', 'y', 'c', 'm']
@@ -18,19 +13,8 @@ class PIDInputPanel(QDialog):
         
         self.ui = Ui_Window()
         self.ui.setupUi(self)
-
-        # loader = QUiLoader()
-        # self.ui = loader.load('PID_input_form_2.ui', self)
         
-        # self.width_ui = self.ui.width()
-        # self.height_ui = self.ui.height()
-
-        #self.setGeometry(0, 0, self.ui.size().width(), self.ui.size().height())
-        # layout = QVBoxLayout()
-        # layout.addWidget(self.ui)
-        # self.setLayout(layout)
-        # self.resize(self.width_ui, self.height_ui)
-        # self.setWindowTitle("PID input: " + title_str)
+        self.setWindowTitle("PID input: " + title_str)
         
         self.ui.label_Kc_old.setText(str(Kc))
         self.ui.label_Ti_old.setText(str(Ti))

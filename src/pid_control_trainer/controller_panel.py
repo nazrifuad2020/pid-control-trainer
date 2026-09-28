@@ -9,11 +9,6 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QMessageBox
 from PyQt5.QtGui import QDoubleValidator
 
-# from PySide2.QtUiTools import QUiLoader
-# from PySide2.QtCore import Qt
-# from PySide2.QtWidgets import QVBoxLayout, QWidget, QTableWidgetItem, QListWidgetItem, QDialog, QMessageBox
-# from PySide2.QtGui import QDoubleValidator
-
 from .level_widget import LevelBarWidget
 
 from .data_logger_panel import DataLogger
@@ -37,14 +32,7 @@ class ControllerPanel(QWidget):
         self.ui = Ui_Window()
         self.ui.setupUi(self)
 
-        # loader = QUiLoader()
-        # self.ui = loader.load('Controller_Panel.ui', self)
-
         self.setWindowTitle(control_str)
-        # layout = QVBoxLayout()
-        # layout.addWidget(self.ui)
-        # self.setLayout(layout)
-        #self.setGeometry(0, 0, self.ui.size().width(), self.ui.size().height())
         self.setWindowFlag(Qt.WindowMaximizeButtonHint, on=False)
         
         self.desc = control_str
@@ -52,7 +40,6 @@ class ControllerPanel(QWidget):
         self.ui.label_OP.setText('OP (' + valve_str + '):')
         
         self.Ts = Ts
-        #self.ui.label_Ts.setText(str(self.Ts))
         
         self.OPmin = 0
         self.OPmax = 100
