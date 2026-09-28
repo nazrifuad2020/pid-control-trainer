@@ -10,11 +10,11 @@ from pathlib import Path
 
 pen_color_list = ['b', 'g', 'y', 'c', 'm']
 
-UI_PATH = Path(__file__).parent / 'pid_input_form.ui'
+UI_PATH = Path(__file__).parent / 'pid_panel.ui'
 Ui_Window, QtBaseClass = uic.loadUiType(str(UI_PATH))
-class PID_Input_Form(QDialog):
+class PIDInputPanel(QDialog):
     def __init__(self, title_str, Kc, Ti, Td, action=1, form=0):
-        super(PID_Input_Form, self).__init__()
+        super(PIDInputPanel, self).__init__()
         
         self.ui = Ui_Window()
         self.ui.setupUi(self)

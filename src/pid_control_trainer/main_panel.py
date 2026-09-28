@@ -11,11 +11,11 @@ from PyQt5.QtCore import pyqtSignal, Qt, QObject, QEvent
 from PyQt5.QtWidgets import QTreeWidgetItem, QMessageBox, QMainWindow, QApplication
 from PyQt5.QtGui import QBrush, QPixmap
 
-from .two_phase_sep import TWO_PHASE_SEP
+from .sim_engine import TwoPhaseSepSimulator
 
-from . import Level_Widget_Module
+from . import level_widget
 
-from .controller_panel import Controller_Panel
+from .controller_panel import ControllerPanel
 
 import sys, time, threading
 
@@ -38,10 +38,11 @@ def clickable(widget):
     widget.installEventFilter(filter_)
     return filter_.clicked
 
-UI_PATH = Path(__file__).parent / 'ProcSimLab_Phase_Separator.ui'
+
+UI_PATH = Path(__file__).parent / 'main_panel.ui'
 Ui_Window, QtBaseClass = uic.loadUiType(str(UI_PATH))
 
-class My_Two_PhaseSep_Window(QMainWindow):
+class MainPanel(QMainWindow):
     update_gui_pysig = pyqtSignal()
     critical_stop_pysig = pyqtSignal(str)
 
@@ -49,7 +50,7 @@ class My_Two_PhaseSep_Window(QMainWindow):
     SIM_IS_PAUSED = False
 
     def __init__(self):
-        super(My_Two_PhaseSep_Window, self).__init__()
+        super(MainPanel, self).__init__()
         
         self.ui = Ui_Window()
         self.ui.setupUi(self)
@@ -58,7 +59,7 @@ class My_Two_PhaseSep_Window(QMainWindow):
         pixmap = QPixmap(str(PIX_PATH))
         self.ui.label_34.setPixmap(pixmap)
 
-        self.level_ind = Level_Widget_Module.LevelWidget(Qt.magenta)
+        self.level_ind = level_widget.LevelWidget(Qt.magenta)
         self.ui.verticalLayout_level.addWidget(self.level_ind) 
 
         self.update_gui_pysig.connect(self.update_gui)
@@ -202,13 +203,13 @@ class My_Two_PhaseSep_Window(QMainWindow):
             self.ui.lcd_hr.display(hours)   
         
     def start_sim_session(self):
-        self.two_phase_sep = TWO_PHASE_SEP()
+        self.two_phase_sep = TwoPhaseSepSimulator()
         
         hliq = self.two_phase_sep.hliq
-        self.LIC100 = Controller_Panel("LIC100", hliq, 1.25, 3.75, "m", "LCV100", 0.5, MVmin=0.0, MVmax=1.0, mode=1, Kc=2.0, Ti=15.0)
+        self.LIC100 = ControllerPanel("LIC100", hliq, 1.25, 3.75, "m", "LCV100", 0.5, MVmin=0.0, MVmax=1.0, mode=1, Kc=2.0, Ti=15.0)
 
         Pgauge = self.two_phase_sep.get_Pgauge()
-        self.PIC100 = Controller_Panel("PIC100", Pgauge, 0, 10, "barg", "PCV100", 0.5, MVmin=0.0, MVmax=1.0, mode=1, Kc=100.0, Ti=70.0)
+        self.PIC100 = ControllerPanel("PIC100", Pgauge, 0, 10, "barg", "PCV100", 0.5, MVmin=0.0, MVmax=1.0, mode=1, Kc=100.0, Ti=70.0)
 
         self.ui.time_accel_slider.setValue(1)
         self.set_time_accel_label(1)
@@ -310,16 +311,8 @@ class My_Two_PhaseSep_Window(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-    sep_win = My_Two_PhaseSep_Window()
-    sep_win.show()
-    
-    # msg = QMessageBox()
-    # msg.setIcon(QMessageBox.Information)
-    # msg.setWindowTitle("Information")
-    # msg.setText("This software is strictly for evaluation purpose only")
-    # msg.setStandardButtons(QMessageBox.Ok)
-    
-    # msg.exec_()
+    main_panel = MainPanel()
+    main_panel.show()
     
     sys.exit(app.exec_())
             

@@ -16,11 +16,11 @@ from pathlib import Path
 
 pen_color_list = ['b', 'g', 'y', 'c', 'm']
 
-UI_PATH = Path(__file__).parent / 'data_logger.ui'
+UI_PATH = Path(__file__).parent / 'data_logger_panel.ui'
 Ui_Window, QtBaseClass = uic.loadUiType(str(UI_PATH))
-class Data_Logger(QWidget):
+class DataLogger(QWidget):
     def __init__(self, title_str, PVmin, PVmax, PVunit, data_size, Ts=1.0, time_horizon=5, dec_place=2):
-        super(Data_Logger, self).__init__()
+        super(DataLogger, self).__init__()
         
         self.ui = Ui_Window()
         self.ui.setupUi(self)

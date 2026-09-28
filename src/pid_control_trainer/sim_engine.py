@@ -66,7 +66,7 @@ def cubic_EOS(T, P, x, phase_str, k, Tc, Pc, omega):
 
 
 
-class TWO_PHASE_SEP(object):
+class TwoPhaseSepSimulator(object):
     F_in = 38.5
     T = 93+273.15
     zC3 = 0.1 
