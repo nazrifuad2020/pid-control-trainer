@@ -17,7 +17,7 @@ An interactive app for training PID controller based on industrial chemical proc
    ```
    **or using pip:**
    ```bash
-   pip install -e .
+   pip install .
    ```
 
 3. **Launc the app**
