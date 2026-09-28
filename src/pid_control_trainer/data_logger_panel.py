@@ -2,11 +2,6 @@ from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget
 
-# from PySide2.QtUiTools import QUiLoader
-# from PySide2.QtCore import Qt
-# from PySide2.QtWidgets import QVBoxLayout, QWidget, QTableWidgetItem, QListWidgetItem, QDialog, QMessageBox
-# from PySide2.QtGui import QDoubleValidator
-
 import pyqtgraph as pg
 from pyqtgraph import mkPen
 
@@ -25,17 +20,7 @@ class DataLogger(QWidget):
         self.ui = Ui_Window()
         self.ui.setupUi(self)
 
-        # loader = QUiLoader()
-        # self.ui = loader.load('Data_Logger_Chart.ui', self)
-        # self.width_ui = self.ui.width()
-        # self.height_ui = self.ui.height()
-
         self.setWindowTitle(title_str)
-        # layout = QVBoxLayout()
-        # layout.addWidget(self.ui)
-        # self.setLayout(layout)
-        # self.resize(self.width_ui, self.height_ui)
-        #self.setGeometry(0, 0, self.ui.size().width(), self.ui.size().height())
 
         self.plot_area_PV = pg.PlotWidget()
         self.ui.verticalLayout_4.addWidget(self.plot_area_PV)
